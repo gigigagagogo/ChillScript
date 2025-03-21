@@ -1,0 +1,11 @@
+a_new_one zip print_func(chain string){
+	go
+		one_by_one( i in (0,5,1) ){
+			throw_up(^\gms^ + size_up(string) + ^\gms^);
+		}
+	all_set;
+}
+
+x$ scanf function $x 
+chain test -> gimme(chain);
+print_func(test);

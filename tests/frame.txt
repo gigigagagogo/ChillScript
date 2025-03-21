@@ -1,0 +1,92 @@
+chain[100] words;
+
+a_new_one chain sub(chain str, whole_y start, whole_y length) {
+    go
+        imagine((str --> ^^) || (start < 0) || (length < 0) || ((start + length) > size_up(str))) {
+            throw_up(^Error: Invalid substring range\gms^);
+            send_back(^^); 
+        }
+    all_set;
+
+    chain result -> ^^;
+
+    go one_by_one (i in (start, start + length, 1)) {
+        result -> result + str[i];
+    }
+    all_set;
+
+    send_back(result);
+}
+
+a_new_one whole_y split(chain sentence) {
+    whole_y num_words -> 0;
+    whole_y start -> 0;
+    whole_y end -> 0;
+
+    go 
+        one_by_one (i in (0, size_up(sentence), 1)) {
+            go 
+                imagine((sentence[i] --> ^ ^) || (i --> (size_up(sentence) - 1))) {
+                    go imagine(i --> (size_up(sentence) - 1)) {
+                        end -> i + 1;
+                    } nah {
+                        end -> i;
+                    }
+                    all_set;
+
+                    words[num_words] -> sub(sentence, start, end - start);
+                    num_words -> num_words + 1;
+                    start -> i + 1;
+                }
+            all_set;
+        }
+    all_set;
+
+    send_back(num_words);
+}
+
+a_new_one zip frame() {
+    throw_up(^Please enter sentence: \gms^);
+    chain sentence -> gimme(chain);
+    whole_y number_words -> 0;
+    throw_up(^\gms^);
+    number_words -> split(sentence);
+    whole_y max_len -> 0;
+    go 
+        one_by_one (i in (0, number_words, 1)) {	
+            go 
+		imagine((size_up(words[i])) > max_len) {
+ 			max_len -> size_up(words[i]);
+            }
+            all_set;
+        }
+    all_set;
+    go 
+        one_by_one (j in (0, max_len + 4, 1)) {
+            throw_up(^*^);
+        }
+    all_set;
+    throw_up(^\gms^);
+
+    go 
+        one_by_one (i in (0, number_words, 1)) {
+            throw_up(^* ^ + words[i]);
+            go 
+                one_by_one (j in (size_up(words[i]), max_len, 1)) {
+                    throw_up(^ ^);
+                }
+            all_set;
+            throw_up(^ *\gms^);
+        }
+    all_set;
+
+    go 
+        one_by_one (j in (0, (max_len + 4), 1)) {
+            throw_up(^*^);
+        }
+    all_set;
+    throw_up(^\gms^);
+}
+
+frame();
+
